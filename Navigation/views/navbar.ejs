@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Navigation</title>
+    <style>
+        .active {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <!-- Home link -->
+            <li>
+                <a href="/" class="<%= currentPage === 'home' ? 'active' : '' %>">Home</a>
+            </li>
+
+            <!-- Conditional Links for logged-in or logged-out users -->
+            <% if (isLoggedIn) { %>
+                <!-- Profile link -->
+                <li>
+                    <a href="/profile" class="<%= currentPage === 'profile' ? 'active' : '' %>">Profile</a>
+                </li>
+                <!-- Logout link -->
+                <li><a href="/logout">Logout</a></li>
+            <% } else { %>
+                <!-- Login link -->
+                <li><a href="/login" class="<%= currentPage === 'login' ? 'active' : '' %>">Login</a></li>
+            <% } %>
+        </ul>
+    </nav>
+
+    <!-- Welcome message for logged-in users -->
+    <% if (isLoggedIn) { %>
+        <h2>Welcome, <%= userName %>!</h2>
+    <% } %>
+
+    <!-- Page-specific message -->
+    <h3>
+        <% if (currentPage === 'home') { %>
+            You are on the Home page!
+        <% } else if (currentPage === 'profile') { %>
+            You are viewing your Profile.
+        <% } else if (currentPage === 'login') { %>
+            Please log in to access your profile.
+        <% } %>
+    </h3>
+
+</body>
+</html>
