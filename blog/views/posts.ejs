@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Posts</title>
+</head>
+<body>
+  <h1>Blog Posts</h1>
+
+  <!-- Form to create a new post -->
+  <form action="/addPost" method="POST">
+    <input type="text" name="title" placeholder="Title" required><br>
+    <textarea name="body" rows="5" placeholder="Post content" required></textarea><br>
+    <button type="submit">Add Post</button>
+  </form>
+
+  <hr>
+
+  <!-- List all blog posts -->
+  <h2>All Posts:</h2>
+  <ul>
+    <% posts.forEach(function(post) { %>
+      <li>
+        <a href="/posts/<%= post.title %>"><%= post.title %></a>
+      </li>
+    <% }); %>
+  </ul>
+</body>
+</html>
