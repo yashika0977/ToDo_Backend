@@ -1,0 +1,13 @@
+db.students.insertOne({"name" : "yashika" , "roll" : 977 , "grade" : "B"})
+db.students.find()
+db.students.updateOne({ "name": "yashika", "roll": 977 },{ $set: { "age": 21 } });
+db.students.insertOne({"name" :"John" , "roll":1004 , "age" :25})
+db.students.find();
+db.students.find({ age: { $gt: 18 } });
+db.students.find({age :{$gt:18 , $lt:23}})
+db.students.updateOne({"name" :"John" , "roll" :1004 , "age" :25 },{$set : {"grade" : "A"}})
+db.students.insertOne({"name" : "Emily" , "roll" : 390 , "grade" :"C"})
+db.students.deleteOne({"name" : "Emily"});
+db.students.countDocuments({ grade: "B" });
+db.students.find({}, { name: 1, grade: 1, _id: 0 });
+db.students.find().sort({"name":-1})
