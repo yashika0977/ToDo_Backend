@@ -1,0 +1,103 @@
+1) Product
+
+use product
+db.products.insertMany([ { "name": "Product A", "price": 25, "stock": 50 }, { "name": "Product B", "price": 10, "stock": 100 }, { "name": "Product C", "price": 70, "stock": 10 }, { "name": "Product D", "price": 150, "stock": 20 }, { "name": "Product E", "p
+rice": 90, "stock": 5 }, { "name": "Product F", "price": 30, "stock": 0 } ]);
+db.products.find({
+...     price: { $gte: 20, $lte: 100 },
+...     stock: { $gt: 0 }
+... });
+
+2) Students
+
+use students
+db.students.insertMany([{ "name": "Alice", "grade": 90, "attendance": 95, "age": 20 }, { "name": "Bob", "grade": 80, "attendance": 85, "age": 17 }, { "name": "Charlie", "grade": 88, "attendance": 91, "age": 19 }, { "name": "David", "grade": 70, "attendance": 88, "age": 21 }, { "name": "Eve", "grade": 92, "attendance": 93, "age": 22 } ]);
+db.students.find({ $or: [ { grade: { $gt: 85 } }, { attendance: { $gt: 90 } }, { age: { $lt: 18 } } ] });
+
+3) Jobs
+
+use jobs
+db.jobs.insertMany([
+...     { "title": "Software Engineer", "salary": 60000, "location": "New York" },
+...     { "title": "Data Scientist", "salary": 80000, "location": "San Francisco" },
+...     { "title": "Web Developer", "salary": 40000, "location": "Chicago" },
+...     { "title": "Project Manager", "salary": 70000, "location": "New York" },
+...     { "title": "Systems Analyst", "salary": 50000, "location": "San Francisco" },
+...     { "title": "Network Administrator", "salary": 45000, "location": "New York" }
+... ]);
+db.jobs.find({
+...     $and: [
+...         { salary: { $gt: 50000 } },
+...         { $or: [ { location: "New York" }, { location: "San Francisco" } ] }
+...     ]
+... });
+
+
+4) Electronic
+
+use inventory
+db.inventory.insertMany([ { "category": "electronics", "discount": 15, "stock": 20, "name": "Smartphone" }, { "category": "electronics", "discount": 5, "stock": 50, "name": "Laptop" }, { "category": "electronics", "discount": 20, "stock": 0, "name": "Smartwatch" }, { "category": "clothing", "discount": 30, "stock": 25, "name": "T-Shirt" }, { "category": "electronics", "discount": 12, "stock": 10, "name": "Headphones" }, { "category": "furniture", "discount": 10, "stock": 5, "name": "Chair" }, { "category": "electronics", "discount": 8, "stock": 15, "name": "Tablet" } ]);
+db.inventory.find({ category: "electronics", discount: { $gte: 10 }, stock: { $gt: 0 } });
+
+
+
+5) Orders
+
+use orders
+db.orders.insertMany([ { "order_id": 1, "customer_type": "VIP", "status": "pending", "amount": 600 }, { "order_id": 2, "customer_type": "regular", "status": "shipped", "amount": 300 }, { "order_id": 3, "customer_type": "VIP", "status": "delivered", "amount": 150 }, { "order_id": 4, "customer_type": "regular", "status": "pending", "amount": 800 }, { "order_id": 5, "customer_type": "VIP", "status": "pending", "amount": 200 }, { "order_id": 6, "customer_type": "regular", "status": "pending", "amount": 400 }, { "order_id": 7, "customer_type": "VIP", "status": "pending", "amount": 1000]);
+db.orders.find({ status: "pending", $or: [ { customer_type: "VIP" }, { amount: { $gt: 500 } } ] });
+
+
+
+6) Find Students Exceeding Both Age and Grade Limits:
+db.students.find({ $or: [ { $and: [ { age: { $gt: 18 } }, { grade: { $lt: 60 } } ] }, { attendance: { $lt: 75 } } ]
+
+
+7)Special Offers on Furniture:
+
+db.products.updateMany({ name: "Product A" }, { $set: { category: "electronics", availability: 50 } });
+db.products.updateMany({ name: "Product B" }, { $set: { category: "electronics", availability: 100 } });
+db.products.updateMany({ name: "Product C" }, { $set: { category: "furniture", availability: 10 } });
+db.products.updateMany({ name: "Product D" }, { $set: { category: "furniture", availability: 20 } });
+db.products.updateMany({ name: "Product E" }, { $set: { category: "electronics", availability: 5 } });
+db.products.updateMany({ name: "Product F" }, { $set: { category: "electronics", availability: 0 } });
+
+db.products.find({
+    category: "furniture",
+    $or: [
+        { price: { $lt: 200 } },
+        { availability: { $lt: 5 } }
+    ]
+});
+
+
+8)  **Available Software and Services**:
+
+use items
+db.items.insertMany([ { "name": "Antivirus Software", "type": "software", "price": 50 }, { "name": "Cloud Backup Service", "type": "service", "price": 80 }, { "name": "Web Hosting", "type": "service", "price": 120 }, { "name": "Graphics Software", "type": "software", "price": 200 }, { "name": "Email Service", "type": "service", "price": 20 }, { "name": "Office Suite", "type": "software", "price": 90 }, { "name": "Consultation Service", "type": "service", "price": 150 } ]);
+db.items.find({ type: { $in: ["software", "service"] }, price: { $lt: 100 } });
+
+
+9)Filter Employees by Experience or Department:
+
+use employees
+db.employees.insertMany([ { "name": "Alice", "experience": 7, "department": "Engineering" }, { "name": "Bob", "experience": 3, "department": "HR" }, { "name": "Charlie", "experience": 10, "department": "Sales" }, { "name": "David", "experience": 6, "department": "Engineering" }, { "name": "Eve", "experience": 2, "department": "Marketing" }, { "name": "Frank", "experience": 8, "department": "HR" }, { "name": "Grace", "experience": 4, "department": "Engineering" }, { "name": "Heidi", "experience": 5, "department": "HR" }, { "name": "Ivan", "experience": 12, "department": "Engineering" }
+db.employees.find({ $and: [ { experience: { $gt: 5 } }, { department: { $in: ["Engineering", "HR"] } } ] });
+
+
+
+10) Urgent Orders for High-Value Products:
+
+use orders
+db.orders.insertMany([ { "order_id": 1, "status": "urgent", "total_amount": 1500, "priority": "medium" }, { "order_id": 2, "status": "normal", "total_amount": 200, "priority": "low" }, { "order_id": 3, "status": "urgent", "total_amount": 900, "priority": "high" }, { "order_id": 4, "status": "urgent", "total_amount": 2500, "priority": "high" }, { "order_id": 5, "status": "normal", "total_amount": 3000, "priority": "medium" }, { "order_id": 6, "status": "urgent", "total_amount": 700, "priority": "low" }, { "order_id": 7, "status": "normal", "total_amount": 1100, "priority": "high" } ]); 
+ db.orders.find({ $or: [ { $and: [ { status: "urgent" }, { total_amount: { $gt: 1000 } } ] }, { priority: "high" } ] });
+
+
+
+
+
+
+
+
+
+
